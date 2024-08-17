@@ -31,6 +31,14 @@ class BusinessPlan:
     """
     Taxa de variação linear, ou coeficiente angular.
     """
+
+    x = sp.Symbol('x')
+
+    # Mesma função que calcula o custo total, mas usando o objeto Symbol do sympy
+    total_cost_function = 800 + 0.16 * x - 6e-4 * x ** 2 + 3e-6 * x ** 3
+
+    # Taxa de variação linear da reta tangente
+    return sp.limit((total_cost_function - self.initial_point[1]) / (x - self.initial_point[0]), x, self.initial_point[0])
   
   def calculateTotalCost(self, quantity: int) -> float:
 
@@ -43,22 +51,12 @@ class BusinessPlan:
     if quantity <= self.initial_point[0]:
 
       return 800 + 0.16 * quantity - 6e-4 * quantity ** 2 + 3e-6 * quantity ** 3
-    
-    # Achar a taxa de variação linear da reta tangente no ponto initial
-
-    x = sp.Symbol('x')
-
-    # Mesma função que calcula o custo total, mas usando o objeto Symbol do sympy
-    total_cost_function = 800 + 0.16 * x - 6e-4 * x ** 2 + 3e-6 * x ** 3
-
-    # Taxa de variação linear da reta tangente
-    angular_coefficient = sp.limit((total_cost_function - self.initial_point[1]) / (x - self.initial_point[0]), x, self.initial_point[0])
 
     """
     função que define o valor de y na reta tangente
     y - y0 = m * (x - x0) => y = m * x + y0 - m * x0
     """
-    return angular_coefficient * quantity + self.initial_point[1] - angular_coefficient * self.initial_point[0]
+    return self.linear_rate_change * quantity + self.initial_point[1] - self.linear_rate_change * self.initial_point[0]
     
   def calculateTotalRevenue(self, quantity: int) -> float:
 

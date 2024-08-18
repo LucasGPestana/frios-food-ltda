@@ -1,5 +1,5 @@
 from src.business_plan import BusinessPlan
-from src.functions import changeColor
+from src.utils import changeColor
 
 if __name__ == "__main__":
 

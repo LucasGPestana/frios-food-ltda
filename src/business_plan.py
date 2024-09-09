@@ -199,7 +199,7 @@ class BusinessPlan:
 
     ax.legend()
 
-    plt.show()
     plt.tight_layout()
+    plt.show()
 
     fig.savefig(f"{os.path.join(PROJECT_DIRPATH, "graphics", f"{ordinate_axis_variable}.png")}")
